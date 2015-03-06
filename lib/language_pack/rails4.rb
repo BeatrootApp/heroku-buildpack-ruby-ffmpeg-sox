@@ -66,6 +66,25 @@ WARNING
     "tmp/cache/assets"
   end
 
+  def run_direct_copy_to_s3_task
+    instrument "rails4.direct_copy_to_s3" do
+      log("assets_direct_copy_to_s3") do
+        transfer_files_task = rake.task("deploy:post_asset_compilation_tasks")
+        return true unless transfer_files_task.is_defined?
+
+        transfer_files_task.invoke(env: rake_env)
+
+        if transfer_files_task.success?
+          log "direct_copy_to_s3", :status => "success"
+          puts "Direct copy to S3 completed (#{"%.2f" % transfer_files_task.time}s)"
+        else
+          log "direct_copy_to_s3", :status => "failure"
+          msg = "Direct copy to S3 failed.\n"
+        end
+      end
+    end    
+  end
+
   def run_assets_precompile_rake_task
     instrument "rails4.run_assets_precompile_rake_task" do
       log("assets_precompile") do
