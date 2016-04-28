@@ -1,3 +1,5 @@
+/.idea
+.project
 repos/*
 .DS_Store
 vendor/bundler/*
