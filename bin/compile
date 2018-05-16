@@ -30,6 +30,7 @@ rescue Exception => e
   end
 end
 
+FFMPEG_URL = 'https://raw.githubusercontent.com/BeatrootApp/static-builds/master/builds/ffmpeg-git-64bit-static.tar.xz'
 
 vendor_dir = ARGV[0] + '/vendor'
 bin_dir = vendor_dir + '/bin'
@@ -47,7 +48,7 @@ system("rm #{vendor_dir}/aws.tar.gz")
 system("ln -s ~/vendor/aws/aws #{bin_dir}/aws")
 
 system('echo "       Downloading and setting up ffmpeg."')
-system("cd #{vendor_dir} && curl https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz -s -O")
+system("cd #{vendor_dir} && curl #{FFMPEG_URL} -s -O")
 system("mkdir -p #{vendor_dir}/ffmpeg && tar xf #{vendor_dir}/ffmpeg-git-64bit-static.tar.xz -C #{vendor_dir}/ffmpeg --strip-components=1")
 system("rm #{vendor_dir}/ffmpeg-git-64bit-static.tar.xz")
 system("ln -s ~/vendor/ffmpeg/ffmpeg #{bin_dir}/ffmpeg")
